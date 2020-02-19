@@ -53,7 +53,7 @@ ButtonNavigator.prototype.render = function () {
     </div>
 
     <div class="${css.jumpButtons} btn-group p-1">
-      <button class='btn btn-primary btn-sm ${css.navigator} ${css.jumpButton} fas fa-step-backward'  id='jumppreviousbreakpoint' title='Jump to the previous breakpoint' onclick=${function () { self.event.trigger('jumpPreviousBreakpoint') }} disabled=${this.jumpPreviousBreakpointDisabled} ></button>
+      <button class='btn btn-primary btn-sm ${css.navigator} ${css.jumpButton} fas fa-step-backward'  id='jumppreviousbreakpoint' data-id="buttonNavigatorJumpPreviousBreakpoint" title='Jump to the previous breakpoint' onclick=${function () { self.event.trigger('jumpPreviousBreakpoint') }} disabled=${this.jumpPreviousBreakpointDisabled} ></button>
       <button class='btn btn-primary btn-sm ${css.navigator} ${css.jumpButton} fas fa-eject' id='jumpout' title='Jump out' onclick=${function () { self.event.trigger('jumpOut') }} disabled=${this.jumpOutDisabled} ></button>
       <button class='btn btn-primary btn-sm ${css.navigator} ${css.jumpButton} fas fa-step-forward' id='jumpnextbreakpoint' title='Jump to the next breakpoint' onclick=${function () { self.event.trigger('jumpNextBreakpoint') }} disabled=${this.jumpNextBreakpointDisabled} ></button>
     </div>

@@ -100,7 +100,7 @@ class MultiParamManager {
     if (this.funABI.inputs) {
       return yo`<div>
         ${this.funABI.inputs.map(function (inp) {
-          return yo`<div class="${css.multiArg}"><label for="${inp.name}"> ${inp.name}: </label><input placeholder="${inp.type}" title="${inp.name}"></div>`
+          return yo`<div class="${css.multiArg}"><label for="${inp.name}"> ${inp.name}: </label><input placeholder="${inp.type}" title="${inp.name}" data-id="multiParamManagerInput${inp.name}"></div>`
         })}
       </div>`
     }
@@ -120,6 +120,7 @@ class MultiParamManager {
     this.basicInputField.setAttribute('placeholder', this.inputs)
     this.basicInputField.setAttribute('title', this.inputs)
     this.basicInputField.setAttribute('style', 'flex: 4')
+    this.basicInputField.setAttribute('data-id', `multiParamManagerBasicInputField${this.inputs}`)
 
     var onClick = () => {
       this.clickCallBack(this.funABI.inputs, this.basicInputField.value)
@@ -184,22 +185,28 @@ class MultiParamManager {
       expandedButton.setAttribute('title', (title + ' - call'))
       expandedButton.innerHTML = 'call'
       expandedButton.classList.add('btn-info')
+      expandedButton.setAttribute('data-id', (title + ' - call'))
       funcButton.setAttribute('title', (title + ' - call'))
       funcButton.classList.add('btn-info')
+      funcButton.setAttribute('data-id', (title + ' - call'))
     } else if (this.funABI.stateMutability === 'payable' || this.funABI.payable) {
       // transact. stateMutability = payable
       expandedButton.setAttribute('title', (title + ' - transact (payable)'))
       expandedButton.innerHTML = 'transact'
       expandedButton.classList.add('btn-danger')
+      expandedButton.setAttribute('data-id', (title + ' - transact (payable)'))
       funcButton.setAttribute('title', (title + ' - transact (payable)'))
       funcButton.classList.add('btn-danger')
+      funcButton.setAttribute('data-id', (title + ' - transact (payable)'))
     } else {
       // transact. stateMutability = nonpayable
       expandedButton.setAttribute('title', (title + ' - transact (not payable)'))
       expandedButton.innerHTML = 'transact'
       expandedButton.classList.add('btn-warning')
+      expandedButton.setAttribute('data-id', (title + ' - transact (not payable)'))
       funcButton.classList.add('btn-warning')
       funcButton.setAttribute('title', (title + ' - transact (not payable)'))
+      funcButton.setAttribute('data-id', (title + ' - transact (not payable)'))
     }
 
     if (this.funABI.inputs && this.funABI.inputs.length > 0) {
