@@ -90,7 +90,8 @@ class DropdownLogic {
       isOverSizeLimit: () => {
         var deployedBytecode = contract.object.evm.deployedBytecode
         return (deployedBytecode && deployedBytecode.object.length / 2 > 24576)
-      }
+      },
+      metadata: contract.object.metadata
     }
   }
 
