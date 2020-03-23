@@ -61,7 +61,7 @@ module.exports = {
   /*
   'Should grant plugin permission (ZOKRATES)': function (browser) {
     browser.waitForElementVisible('*[data-id="pluginManagerComponentPluginManager"]')
-    .click('*[data-id="pluginManagerSettingsButton"]')
+    .click('*[data-id="pluginManagerPermissionsButton"]')
     .waitForElementVisible('*[data-id="pluginManagerSettingsPermissionForm"]')
     .assert.containsText('*[data-id="pluginManagerSettingsPermissionForm"]', 'No Permission requested yet')
     .modalFooterOKClick()
@@ -84,8 +84,8 @@ module.exports = {
   'Should revert plugin permission (ZOKRATES)': function (browser) {
     browser.waitForElementVisible('*[data-id="verticalIconsSettingsIcons"]')
     .click('*[data-id="verticalIconsSettingsIcons"]')
-    .waitForElementVisible('*[data-id="pluginManagerSettingsButton"]')
-    .click('*[data-id="pluginManagerSettingsButton"]')
+    .waitForElementVisible('*[data-id="pluginManagerPermissionsButton"]')
+    .click('*[data-id="pluginManagerPermissionsButton"]')
     .waitForElementVisible('*[data-id="modalDialogContainer"]')
     .click('*[data-id="pluginManagerSettingsPermissionForm"]')
     .pause(2000)
@@ -123,8 +123,9 @@ module.exports = {
     .click('*[data-id="localPluginRadioButtonsidePanel"]')
     .click('*[data-id="modalDialogModalFooter"]')
     .modalFooterOKClick()
-    .pause(2000)
+    .pause(5000)
     .waitForElementVisible('*[data-shared="tooltipPopup"]:nth-last-of-type(1)')
+    .pause(2000)
     .assert.containsText('*[data-shared="tooltipPopup"]:nth-last-of-type(1)', 'Cannot create Plugin : This name has already been used')
     .end()
   },
