@@ -38,8 +38,15 @@ class CompilerContainer {
     }
     if (!this._view.compilationButton) return
     const button = this.compilationButton(name.split('/').pop())
-    this._disableCompileBtn(!name)
+    this._disableCompileBtn(!name || (name && !this.isSolFileSelected(name)))
     yo.update(this._view.compilationButton, button)
+  }
+
+  isSolFileSelected (currentFile = '') {
+    if (!currentFile) currentFile = this.config.get('currentFile')
+    if (!currentFile) return false
+    const extention = currentFile.substr(currentFile.length - 3, currentFile.length)
+    return extention.toLowerCase() === 'sol' || extention.toLowerCase() === 'yul'
   }
 
   deactivate () {
@@ -113,9 +120,9 @@ class CompilerContainer {
    */
   compilationButton (name = '') {
     const displayed = name || '<no file selected>'
-    const disabled = name ? '' : 'disabled'
+    const disabled = name && this.isSolFileSelected() ? '' : 'disabled'
     const compileBtn = yo`
-      <button id="compileBtn" class="btn btn-primary btn-block ${disabled}" title="Compile" onclick="${this.compile.bind(this)}">
+      <button id="compileBtn" data-id="compilerContainerCompileBtn" class="btn btn-primary btn-block ${disabled}" title="Compile" onclick="${this.compile.bind(this)}">
         <span>${this._view.compileIcon} Compile ${displayed}</span>
       </button>
     `
@@ -131,7 +138,7 @@ class CompilerContainer {
     if (!btn) return
     if (shouldDisable) {
       btn.classList.add('disabled')
-    } else if (this.config.get('currentFile')) {
+    } else if (this.isSolFileSelected()) {
       btn.classList.remove('disabled')
     }
   }
@@ -241,7 +248,7 @@ class CompilerContainer {
             <div class="row w-100 no-gutters mb-2">
               <div class="col-sm-4">
                 <div class="d-flex flex-row justify-content-end">
-                  <label class="${css.compilerLabel} input-group-text pr-0 border-0 w-100" for="versionSelector">
+                  <label class="${css.compilerLabel} form-check-label input-group-text pr-0 border-0 w-100" for="versionSelector">
                     <button class="far fa-plus-square border-0 p-0 mx-2 btn-sm" onclick="${(e) => this.promtCompiler(e)}" title="Add a custom compiler with URL"></button>
                     Compiler
                   </label>
@@ -250,14 +257,14 @@ class CompilerContainer {
               <div class="col-sm-8">
                 ${this._view.versionSelector}
                 <div class="pt-0 ${css.nightlyBuilds}">
-                  <label for="nightlies" class="text-dark p-0 m-0">Include nightly builds</label>
+                  <label for="nightlies" class="text-dark p-0 m-0 form-check-label">Include nightly builds</label>
                   ${this._view.includeNightlies}
                 </div>
               </div>
             </div>
             <div class="row w-100 no-gutters mb-2">
               <div class="col-sm-4">
-                <label class="${css.compilerLabel} input-group-text pl-0 border-0" for="compilierLanguageSelector">Language</label>
+                <label class="${css.compilerLabel} form-check-label input-group-text pl-0 border-0" for="compilierLanguageSelector">Language</label>
               </div>
               <div class="col-sm-8">
                 ${this._view.languageSelector}
@@ -265,7 +272,7 @@ class CompilerContainer {
             </div>
             <div class="row w-100 no-gutters">
               <div class="col-sm-4">
-                <label class="${css.compilerLabel} input-group-text pl-0 border-0" for="evmVersionSelector">EVM Version</label>
+                <label class="${css.compilerLabel} form-check-label input-group-text pl-0 border-0" for="evmVersionSelector">EVM Version</label>
               </div>
               <div class="col-sm-8">
                 ${this._view.evmVersionSelector}
@@ -280,15 +287,15 @@ class CompilerContainer {
           <ul class="list-group list-group-flush">
             <li class="list-group-item form-group ${css.compilerConfig}">
               ${this._view.autoCompile}
-              <label for="autoCompile">Auto compile</label>
+              <label class="form-check-label" for="autoCompile">Auto compile</label>
             </li>
             <li class="list-group-item form-group ${css.compilerConfig}">
               ${this._view.optimize}
-              <label for="optimize">Enable optimization</label>
+              <label class="form-check-label" for="optimize">Enable optimization</label>
             </li>
             <li class="list-group-item form-group ${css.compilerConfig}">
               ${this._view.hideWarningsBox}
-              <label for="hideWarningsBox">Hide warnings</label>
+              <label class="form-check-label" for="hideWarningsBox">Hide warnings</label>
             </li>
           </ul>
         </article>
@@ -316,10 +323,11 @@ class CompilerContainer {
   }
 
   compile (event) {
-    if (this.config.get('currentFile')) {
-      this._setCompilerVersionFromPragma(this.config.get('currentFile'))
-      this.compileTabLogic.runCompiler()
-    }
+    const currentFile = this.config.get('currentFile')
+    if (!this.isSolFileSelected()) return
+
+    this._setCompilerVersionFromPragma(currentFile)
+    this.compileTabLogic.runCompiler()
   }
 
   compileIfAutoCompileOn () {

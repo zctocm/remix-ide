@@ -12,7 +12,9 @@ module.exports = {
   'Test Recorder': function (browser) {
     var addressRef
     browser.addFile('scenario.json', {content: records})
+        .pause(5000)
         .clickLaunchIcon('udapp')
+        .selectAccount('0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c') // this account will be used for this test suite
         .click('div[class^="cardContainer"] i[class^="arrow"]')
         .click('#runTabView .runtransaction')
         .waitForElementPresent('.instance:nth-of-type(2)')
@@ -68,7 +70,7 @@ var sources = [{'browser/testRecorder.sol': {content: `contract testRecorder {
 
 var records = `{
   "accounts": {
-    "account{0}": "0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c"
+    "account{3}": "0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c"
   },
   "linkReferences": {
     "testLib": "created{1512830014773}"
@@ -85,7 +87,7 @@ var records = `{
         "linkReferences": {},
         "inputs": "()",  
         "type": "constructor",
-        "from": "account{0}"
+        "from": "account{3}"
       }
     },
     {
@@ -111,7 +113,7 @@ var records = `{
         "name": "",
         "type": "constructor",
         "inputs": "(uint256)",
-        "from": "account{0}"
+        "from": "account{3}"
       }
     },
     {
@@ -127,7 +129,7 @@ var records = `{
         "name": "set",
         "inputs": "(uint256,address)",
         "type": "function",
-        "from": "account{0}"
+        "from": "account{3}"
       }
     }
   ],
@@ -226,7 +228,7 @@ var records = `{
 
 var scenario = {
   'accounts': {
-    'account{0}': '0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c'
+    'account{3}': '0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c'
   },
   'linkReferences': {},
   'transactions': [
@@ -244,7 +246,7 @@ var scenario = {
         'name': '',
         'type': 'constructor',
         'inputs': '(uint256)',
-        'from': 'account{0}'
+        'from': 'account{3}'
       }
     },
     {
@@ -259,7 +261,7 @@ var scenario = {
         'name': 'set',
         'inputs': '(uint256)',
         'type': 'function',
-        'from': 'account{0}'
+        'from': 'account{3}'
       }
     }
   ],

@@ -4,11 +4,9 @@ import * as packageJson from '../../../package.json'
 import yo from 'yo-yo'
 
 const themes = [
-  {name: 'Dark', quality: 'dark', url: 'https://res.cloudinary.com/dvtmp0niu/raw/upload/v1578991867/remix-dark-theme.css'},
-  {name: 'Light', quality: 'light', url: 'https://res.cloudinary.com/dvtmp0niu/raw/upload/v1578991821/light-theme.css'},
+  {name: 'Dark', quality: 'dark', url: 'https://res.cloudinary.com/dvtmp0niu/raw/upload/v1581586063/remix-dark-theme_w5nghe.css'},
+  {name: 'Light', quality: 'light', url: 'https://res.cloudinary.com/dvtmp0niu/raw/upload/v1581586063/light-theme_fswxxf.css'},
 
-  // switching to the url Todo: remove when the theme is ready
-  // {name: 'Dark', quality: 'dark', url: 'assets/css/remix-dark-theme.css'},
   {name: 'Cerulean', quality: 'light', url: 'https://bootswatch.com/4/cerulean/bootstrap.min.css'},
   {name: 'Flatly', quality: 'light', url: 'https://bootswatch.com/4/flatly/bootstrap.min.css'},
   {name: 'Lumen', quality: 'light', url: 'https://bootswatch.com/4/lumen/bootstrap.min.css'},
@@ -40,7 +38,7 @@ export class ThemeModule extends Plugin {
       config: registry.get('config').api
     }
     this.themes = themes.reduce((acc, theme) => ({ ...acc, [theme.name]: theme }), {})
-    this.active = this._deps.config.get('settings/theme') ? this._deps.config.get('settings/theme') : 'Flatly'
+    this.active = this._deps.config.get('settings/theme') ? this._deps.config.get('settings/theme') : 'Dark'
   }
 
   /** Return the active theme */
@@ -64,7 +62,7 @@ export class ThemeModule extends Plugin {
       theme.addEventListener('load', () => {
         if (callback) callback()
       })
-      document.head.appendChild(theme)
+      document.head.insertBefore(theme, document.head.firstChild)
     }
   }
 
@@ -85,5 +83,16 @@ export class ThemeModule extends Plugin {
     // TODO: Only keep `this.emit` (issue#2210)
     this.emit('themeChanged', nextTheme)
     this.events.emit('themeChanged', nextTheme)
+  }
+
+  /**
+   * fixes the invertion for images since this should be adjusted when we switch between dark/light qualified themes
+   * @param {element} [image] - the dom element which invert should be fixed to increase visibility
+   */
+  fixInvert (image) {
+    const invert = this.currentTheme().quality === 'dark' ? 1 : 0
+    if (image) {
+      image.style.filter = `invert(${invert})`
+    }
   }
 }

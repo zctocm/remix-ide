@@ -100,7 +100,7 @@ class MultiParamManager {
     if (this.funABI.inputs) {
       return yo`<div>
         ${this.funABI.inputs.map(function (inp) {
-          return yo`<div class="${css.multiArg}"><label for="${inp.name}"> ${inp.name}: </label><input placeholder="${inp.type}" title="${inp.name}" data-id="multiParamManagerInput${inp.name}"></div>`
+          return yo`<div class="${css.multiArg}"><label for="${inp.name}"> ${inp.name}: </label><input class="form-control" placeholder="${inp.type}" title="${inp.name}" data-id="multiParamManagerInput${inp.name}"></div>`
         })}
       </div>`
     }
@@ -116,10 +116,9 @@ class MultiParamManager {
       title = this.funABI.type === 'receive' ? '(receive)' : '(fallback)'
     }
 
-    this.basicInputField = yo`<input></input>`
+    this.basicInputField = yo`<input class="form-control"></input>`
     this.basicInputField.setAttribute('placeholder', this.inputs)
     this.basicInputField.setAttribute('title', this.inputs)
-    this.basicInputField.setAttribute('style', 'flex: 4')
     this.basicInputField.setAttribute('data-id', `multiParamManagerBasicInputField${this.inputs}`)
 
     var onClick = () => {
@@ -127,7 +126,7 @@ class MultiParamManager {
     }
     let funcButton = yo`<button onclick=${() => onClick()} class="${css.instanceButton} btn btn-sm">${title}</button>`
     this.contractActionsContainerSingle = yo`
-    <div class="${css.contractActionsContainerSingle}" >
+    <div class="${css.contractActionsContainerSingle} pt-2">
       ${funcButton}
       ${this.basicInputField}
       <i class="fas fa-angle-down ${css.methCaret}" onclick=${() => this.switchMethodViewOn()} title=${title} ></i>
@@ -149,12 +148,11 @@ class MultiParamManager {
     this.contractActionsContainerMulti = yo`<div class="${css.contractActionsContainerMulti}" >
       <div class="${css.contractActionsContainerMultiInner} text-dark" >
         <div onclick=${() => { this.switchMethodViewOff() }} class="${css.multiHeader}">
-          <div class="${css.multiTitle}">${title}</div>
+          <div class="${css.multiTitle} run-instance-multi-title">${title}</div>
           <i class='fas fa-angle-up ${css.methCaret}'></i>
         </div>
         ${this.multiFields}
         <div class="${css.group} ${css.multiArg}" >
-          ${expandedButton}
           ${copyToClipboard(
             () => {
               var multiString = this.getMultiValsString()
@@ -171,6 +169,7 @@ class MultiParamManager {
                 return encodeObj.data
               }
             }, 'Encode values of input fields & copy to clipboard', 'fa-clipboard')}
+            ${expandedButton}
         </div>
       </div>
     </div>`

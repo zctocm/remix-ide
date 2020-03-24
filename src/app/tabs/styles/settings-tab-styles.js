@@ -12,22 +12,8 @@ const css = csjs`
   .info h7 {
     margin-bottom: .5rem;
   }
-  .title {
-    // font-size: 1.1em;
-    // font-weight: bold;
-    // margin-bottom: 1em;
-  }
   .frow {
     margin-bottom: .5rem;
-  }
-  .crow {
-    // display: flex;
-    // overflow: auto;
-    // clear: both;
-    // padding: .2em;
-  }
-  .checkboxText {
-    font-weight: normal;
   }
   .crow label {
     cursor:pointer;
@@ -49,8 +35,6 @@ const css = csjs`
     margin-bottom: 3px;
   }
   input {
-    margin-right: 5px;
-    cursor: pointer;
     width: inherit;
   }
   input[type=radio] {
@@ -65,9 +49,6 @@ const css = csjs`
   }
   .icon {
     margin-right: .5em;
-  }
-  .savegisttoken {
-    margin-left: 5px;
   }
   .aPlugin {
     display: inline-block;
@@ -87,7 +68,7 @@ const css = csjs`
   }
   .inline {
     display: inline;
-    width: 50%;
+    width: 32%;
   }
 `
 

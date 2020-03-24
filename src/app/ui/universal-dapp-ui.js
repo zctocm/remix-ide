@@ -54,12 +54,12 @@ UniversalDAppUI.prototype.renderInstanceFromABI = function (contractABI, address
   let self = this
   address = (address.slice(0, 2) === '0x' ? '' : '0x') + address.toString('hex')
   address = ethJSUtil.toChecksumAddress(address)
-  var instance = yo`<div class="instance ${css.instance} ${css.hidesub}" id="instance${address}"></div>`
+  var instance = yo`<div class="instance run-instance border-dark ${css.instance} ${css.hidesub}" id="instance${address}"></div>`
   const context = this.blockchain.context()
 
   var shortAddress = helper.shortenAddress(address)
   var title = yo`
-    <div class="${css.title} alert alert-secondary p-2">
+    <div class="${css.title} alert alert-secondary">
       <button class="btn ${css.titleExpander}" data-id="universalDappUiTitleExpander" onclick="${(e) => { toggleClass(e) }}">
         <i class="fas fa-angle-right" aria-hidden="true"></i>
       </button>
@@ -98,7 +98,7 @@ UniversalDAppUI.prototype.renderInstanceFromABI = function (contractABI, address
   }
 
   function toggleClass (e) {
-    $(instance).toggleClass(`${css.hidesub}`)
+    $(instance).toggleClass(`${css.hidesub} bg-light`)
     // e.currentTarget.querySelector('i')
     e.currentTarget.querySelector('i').classList.toggle(`fa-angle-right`)
     e.currentTarget.querySelector('i').classList.toggle(`fa-angle-down`)
@@ -121,7 +121,7 @@ UniversalDAppUI.prototype.renderInstanceFromABI = function (contractABI, address
   })
 
   const calldataInput = yo`
-    <input id="deployAndRunLLTxCalldata" class="w-100 m-0" title="The Calldata to send to fallback function of the contract.">
+    <input id="deployAndRunLLTxCalldata" class="w-100 m-0 form-control" title="The Calldata to send to fallback function of the contract.">
   `
   const llIError = yo`
     <label id="deployAndRunLLTxError" class="text-danger"></label>
@@ -234,7 +234,7 @@ UniversalDAppUI.prototype.runTransaction = function (lookupOnly, args, valArr, i
   const functionName = args.funABI.type === 'function' ? args.funABI.name : `(${args.funABI.type})`
   const logMsg = `${lookupOnly ? 'call' : 'transact'} to ${args.contractName}.${functionName}`
 
-  const callbacksInContext = txCallBacks.getCallBacksWithContext(this, this.executionContext)
+  const callbacksInContext = txCallBacks.getCallBacksWithContext(this, this.blockchain)
 
   const outputCb = (returnValue) => {
     if (outputOverride) {

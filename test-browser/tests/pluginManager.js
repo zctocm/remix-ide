@@ -22,20 +22,20 @@ module.exports = {
 
   'Should Search for plugins': function (browser) {
     browser.waitForElementVisible('*[data-id="pluginManagerComponentPluginManager"]')
-     .click('*[data-id="pluginManagerComponentSearchInput"]')
-     .keys('debugger')
-     .waitForElementVisible('*[data-id="pluginManagerComponentActivateButtondebugger"]')
-     .clearValue('*[data-id="pluginManagerComponentSearchInput"]')
-     .click('*[data-id="pluginManagerComponentSearchInput"]')
-     .keys('Deploy & run transactions')
-     .waitForElementVisible('*[data-id="pluginManagerComponentActivateButtonudapp"]')
-     .clearValue('*[data-id="pluginManagerComponentSearchInput"]')
-     .click('*[data-id="pluginManagerComponentSearchInput"]')
-     .keys('ZoKrates')
-     .waitForElementVisible('*[data-id="pluginManagerComponentActivateButtonZoKrates"]')
-     .clearValue('*[data-id="pluginManagerComponentSearchInput"]')
-     .click('*[data-id="pluginManagerComponentSearchInput"]')
-     .keys(browser.Keys.ENTER)
+    .click('*[data-id="pluginManagerComponentSearchInput"]')
+    .keys('debugger')
+    .waitForElementVisible('*[data-id="pluginManagerComponentActivateButtondebugger"]')
+    .clearValue('*[data-id="pluginManagerComponentSearchInput"]')
+    .click('*[data-id="pluginManagerComponentSearchInput"]')
+    .keys('Deploy & run transactions')
+    .waitForElementVisible('*[data-id="pluginManagerComponentActivateButtonudapp"]')
+    .clearValue('*[data-id="pluginManagerComponentSearchInput"]')
+    .click('*[data-id="pluginManagerComponentSearchInput"]')
+    .keys('ZoKrates')
+    .waitForElementVisible('*[data-id="pluginManagerComponentActivateButtonZoKrates"]')
+    .clearValue('*[data-id="pluginManagerComponentSearchInput"]')
+    .click('*[data-id="pluginManagerComponentSearchInput"]')
+    .keys(browser.Keys.ENTER)
   },
 
   'Should activate plugins': function (browser) {
@@ -58,9 +58,10 @@ module.exports = {
     .waitForElementVisible('*[data-id="pluginManagerComponentActivateButtonudapp"]')
   },
 
+  /*
   'Should grant plugin permission (ZOKRATES)': function (browser) {
     browser.waitForElementVisible('*[data-id="pluginManagerComponentPluginManager"]')
-    .click('*[data-id="pluginManagerSettingsButton"]')
+    .click('*[data-id="pluginManagerPermissionsButton"]')
     .waitForElementVisible('*[data-id="pluginManagerSettingsPermissionForm"]')
     .assert.containsText('*[data-id="pluginManagerSettingsPermissionForm"]', 'No Permission requested yet')
     .modalFooterOKClick()
@@ -70,6 +71,7 @@ module.exports = {
     .pause(5000)
     .frame(0)
     .useXpath().click("//span[text()='Compile']")
+    .pause(2000)
     .frameParent()
     .useCss().waitForElementVisible('*[data-id="modalDialogContainer"]')
     .assert.containsText('*[data-id="permissionHandlerMessage"]', 'ZOKRATES" WOULD LIKE TO ACCESS "FILE MANAGER" :')
@@ -82,8 +84,8 @@ module.exports = {
   'Should revert plugin permission (ZOKRATES)': function (browser) {
     browser.waitForElementVisible('*[data-id="verticalIconsSettingsIcons"]')
     .click('*[data-id="verticalIconsSettingsIcons"]')
-    .waitForElementVisible('*[data-id="pluginManagerSettingsButton"]')
-    .click('*[data-id="pluginManagerSettingsButton"]')
+    .waitForElementVisible('*[data-id="pluginManagerPermissionsButton"]')
+    .click('*[data-id="pluginManagerPermissionsButton"]')
     .waitForElementVisible('*[data-id="modalDialogContainer"]')
     .click('*[data-id="pluginManagerSettingsPermissionForm"]')
     .pause(2000)
@@ -92,6 +94,7 @@ module.exports = {
     .assert.containsText('*[data-id="pluginManagerSettingsPermissionForm"]', 'No Permission requested yet')
     .modalFooterOKClick()
   },
+  */
 
   'Should connect a local plugin': function (browser) {
     browser.waitForElementVisible('*[data-id="pluginManagerComponentPluginManager"]')
@@ -120,10 +123,11 @@ module.exports = {
     .click('*[data-id="localPluginRadioButtonsidePanel"]')
     .click('*[data-id="modalDialogModalFooter"]')
     .modalFooterOKClick()
-    .waitForElementVisible('*[data-id="tooltipPopup"]')
-    .assert.containsText('*[data-id="tooltipPopup"]', 'Cannot create Plugin : This name has already been used')
+    .pause(5000)
+    .waitForElementVisible('*[data-shared="tooltipPopup"]:nth-last-of-type(1)')
+    .pause(2000)
+    .assert.containsText('*[data-shared="tooltipPopup"]:nth-last-of-type(1)', 'Cannot create Plugin : This name has already been used')
     .end()
   },
-
   tearDown: sauce
 }
