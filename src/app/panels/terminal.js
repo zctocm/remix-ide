@@ -139,7 +139,7 @@ class Terminal extends Plugin {
 
     self._view.input.innerText = '\n'
     self._view.cli = yo`
-      <div id="terminalCli" data-id="terminalCli" class="${css.cli}">
+      <div id="terminalCli" data-id="terminalCli" class="${css.cli}" onclick=${focusinput}>
         <span class=${css.prompt}>${'>'}</span>
         ${self._view.input}
       </div>
@@ -158,7 +158,7 @@ class Terminal extends Plugin {
       class="border ${css.filter} form-control"
       id="searchInput"
       onkeydown=${filter}
-      placeholder="Search with transaction hash or address">
+      placeholder="Filter with transaction hash or address">
     </input>`
     self._view.bar = yo`
       <div class="${css.bar}">
@@ -194,7 +194,7 @@ class Terminal extends Plugin {
       </div>
     `
     self._view.term = yo`
-      <div class="${css.terminal_container}" data-id="terminalContainer" onscroll=${throttle(reattach, 10)} onclick=${focusinput}>
+      <div class="${css.terminal_container}" data-id="terminalContainer" onscroll=${throttle(reattach, 10)}>
         ${self._components.autoCompletePopup.render()}
         <div class="bg-secondary" data-id="terminalContainerDisplay" style="
           position: absolute;
